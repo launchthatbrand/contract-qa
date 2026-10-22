@@ -17,7 +17,7 @@ public final class SpringAiEmbeddingClient implements EmbeddingClient {
         float[] vector = embeddingModel.embed(text);
         if (vector.length != dimensions) {
             throw new IllegalStateException(
-                    "Bedrock returned " + vector.length + " dimensions; this database stores " + dimensions);
+                    "Gemini returned " + vector.length + " dimensions; this database stores " + dimensions);
         }
         return vector;
     }

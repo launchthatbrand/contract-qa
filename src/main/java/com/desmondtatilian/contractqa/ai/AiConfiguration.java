@@ -16,20 +16,20 @@ public class AiConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring.ai.model.embedding", havingValue = "none", matchIfMissing = true)
+    @ConditionalOnProperty(name = "spring.ai.model.embedding.text", havingValue = "none", matchIfMissing = true)
     EmbeddingClient fakeEmbeddingClient(RetrievalProperties properties) {
         return new FakeEmbeddingClient(properties.dimensions());
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring.ai.model.chat", havingValue = "bedrock-converse")
-    AnswerClient bedrockAnswerClient(ChatClient.Builder builder) {
+    @ConditionalOnProperty(name = "spring.ai.model.chat", havingValue = "google-genai")
+    AnswerClient geminiAnswerClient(ChatClient.Builder builder) {
         return new SpringAiAnswerClient(builder);
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring.ai.model.embedding", havingValue = "bedrock-titan")
-    EmbeddingClient bedrockEmbeddingClient(EmbeddingModel embeddingModel, RetrievalProperties properties) {
+    @ConditionalOnProperty(name = "spring.ai.model.embedding.text", havingValue = "google-genai")
+    EmbeddingClient geminiEmbeddingClient(EmbeddingModel embeddingModel, RetrievalProperties properties) {
         return new SpringAiEmbeddingClient(embeddingModel, properties.dimensions());
     }
 }

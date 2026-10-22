@@ -11,7 +11,7 @@ CREATE TABLE chunks (
     document_id uuid NOT NULL REFERENCES documents (id),
     position integer NOT NULL,
     content text NOT NULL,
-    embedding vector(1024) NOT NULL
+    embedding vector(768) NOT NULL
 );
 
 CREATE INDEX chunks_document_idx ON chunks (document_id);

@@ -17,7 +17,13 @@ spring:
   ai:
     model:
       chat: none
-      embedding: none
+      embedding:
+        text: none
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.google.genai.autoconfigure.chat.GoogleGenAiChatAutoConfiguration
+      - org.springframework.ai.model.google.genai.autoconfigure.embedding.GoogleGenAiEmbeddingConnectionAutoConfiguration
+      - org.springframework.ai.model.google.genai.autoconfigure.embedding.GoogleGenAiTextEmbeddingAutoConfiguration
 
 server:
   port: 8080
@@ -33,4 +39,4 @@ app:
     limit: 4
     max-cosine-distance: 0.75
   embedding:
-    dimensions: 1024
+    dimensions: 768
