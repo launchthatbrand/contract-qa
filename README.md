@@ -2,7 +2,7 @@
 
 A question is answered from the passages stored for that PDF. The model never sees a question that has no nearby passage, and every returned answer cites the passages that were retrieved.
 
-The default process embeds text with a deterministic local vector and answers by returning the top passage. That is what the tests run. Set `SPRING_PROFILES_ACTIVE=gemini` to switch both calls to Spring AI on Gemini: `gemini-embedding-001` for vectors and `gemini-2.5-flash` for the answer. The database column is `vector(768)`. Gemini's embedding model is asked for 768 dimensions, which is one of the sizes it supports. The Gemini profile needs `GEMINI_API_KEY` from Google AI Studio. `GEMINI_CHAT_MODEL` overrides the chat model.
+The default process embeds text with a deterministic local vector and answers by returning the top passage. That is what the tests run. Set `SPRING_PROFILES_ACTIVE=gemini` to switch both calls to Spring AI on Gemini: `gemini-embedding-001` for vectors and `gemini-3.5-flash` for the answer. The database column is `vector(768)`. Gemini's embedding model is asked for 768 dimensions, which is one of the sizes it supports. The Gemini profile needs `GEMINI_API_KEY` from Google AI Studio. `GEMINI_CHAT_MODEL` overrides the chat model.
 
 A database created with the earlier 1024-dimension column has to be recreated. `docker compose down -v` drops it.
 
