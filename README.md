@@ -21,4 +21,6 @@ GEMINI_API_KEY=... SPRING_PROFILES_ACTIVE=gemini mvn spring-boot:run
 
 Open http://localhost:8080, upload a PDF, and ask a question.
 
+The cluster copy is https://contract-qa.apps.onpoint.host. `GEMINI_API_KEY` and the database password live in the `contract-qa-env` secret in the `launchthat` namespace. They are not in this repository. A push to `main` builds `ghcr.io/launchthatbrand/contract-qa` and rolls the deployment on the k3s node.
+
 `POST /api/documents` accepts a multipart file named `file`. `POST /api/questions` accepts `{"documentId","question"}` and returns `answer`, `found`, and `citations`.

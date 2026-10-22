@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: contract-qa
+  namespace: launchthat
+  labels:
+    app: contract-qa
+spec:
+  selector:
+    app: contract-qa
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contract-qa
+  namespace: launchthat
+  labels:
+    app: contract-qa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contract-qa
+  template:
+    metadata:
+      labels:
+        app: contract-qa
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull
+      containers:
+        - name: contract-qa
+          image: ghcr.io/launchthatbrand/contract-qa:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: gemini
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: contract-qa-env
+                  key: GEMINI_API_KEY
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://contract-qa-postgres:5432/contractqa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: contract
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: contract-qa-env
+                  key: POSTGRES_PASSWORD
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 40
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
