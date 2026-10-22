@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: contract-qa
+  datasource:
+    url: jdbc:postgresql://localhost:5432/contractqa
+    username: contract
+    password: contract
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    problemdetails:
+      enabled: true
+  ai:
+    model:
+      chat: none
+      embedding: none
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+app:
+  retrieval:
+    limit: 4
+    max-cosine-distance: 0.75
+  embedding:
+    dimensions: 1024

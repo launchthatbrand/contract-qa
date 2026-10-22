@@ -1,0 +1,16 @@
+spring:
+  ai:
+    model:
+      chat: bedrock-converse
+      embedding: bedrock-titan
+    bedrock:
+      aws:
+        region: ${AWS_REGION:us-east-1}
+      converse:
+        chat:
+          options:
+            model: ${BEDROCK_CHAT_MODEL:amazon.nova-lite-v1:0}
+      titan:
+        embedding:
+          model: amazon.titan-embed-text-v2:0
+          input-type: TEXT

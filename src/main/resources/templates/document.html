@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contract Q&amp;A</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 0; background: #f6f3ee; color: #1c1917; }
+    main { max-width: 40rem; margin: 4rem auto; padding: 0 1.25rem; }
+    a { color: #9a3412; }
+    form { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    input[type=text] { flex: 1; padding: 0.6rem 0.8rem; border: 1px solid #d6d3d1; border-radius: 0.6rem; font: inherit; }
+    button { background: #9a3412; color: white; border: 0; border-radius: 999px; padding: 0.6rem 1rem; font: inherit; cursor: pointer; }
+    article { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e7e5e4; }
+    blockquote { margin: 0.5rem 0; padding-left: 0.8rem; border-left: 3px solid #fdba74; }
+  </style>
+</head>
+<body>
+<main>
+  <p><a href="/">Upload another PDF</a></p>
+  <h1>Ask this document</h1>
+  <form th:action="@{'/documents/' + ${documentId} + '/questions'}" method="post">
+    <input type="text" name="question" placeholder="What is the payment term?" required th:value="${question}">
+    <button type="submit">Ask</button>
+  </form>
+  <article th:if="${result}">
+    <p th:text="${result.answer}">Answer</p>
+    <div th:if="${result.found}">
+      <h2>Cited passages</h2>
+      <blockquote th:each="citation : ${result.citations}" th:text="${citation.excerpt}">Passage</blockquote>
+    </div>
+  </article>
+</main>
+</body>
+</html>
